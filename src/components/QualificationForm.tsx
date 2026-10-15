@@ -198,8 +198,7 @@ export function QualificationForm({
         <div className="qualification-copy">
           <Eyebrow>Vamos entender sua empresa</Eyebrow>
           <h2>
-            Seu próximo passo
-            <br />
+            Seu próximo passo <br />
             <span className="soft-color">começa aqui.</span>
           </h2>
           <p>

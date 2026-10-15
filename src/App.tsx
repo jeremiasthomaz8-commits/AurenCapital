@@ -208,8 +208,7 @@ export default function App() {
             <div>
               <Logo />
               <p>
-                Orientação e estratégia
-                <br />
+                Orientação e estratégia <br />
                 para decidir melhor.
               </p>
             </div>

@@ -40,8 +40,7 @@ export function FAQAccordion() {
         <div className="faq-heading">
           <Eyebrow>Respostas com transparência</Eyebrow>
           <h2>
-            Suas dúvidas.
-            <br />
+            Suas dúvidas. <br />
             <span className="soft-color">Sem rodeios.</span>
           </h2>
           <p>Conheça o serviço antes de contratar.</p>

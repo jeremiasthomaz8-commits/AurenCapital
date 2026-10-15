@@ -70,8 +70,7 @@ export function ProblemAwareness() {
           “
         </span>
         <h2>
-          Crédito negado nem sempre
-          <br />
+          Crédito negado nem sempre <br />
           significa <span>falta de potencial.</span>
         </h2>
         <p>
@@ -114,8 +113,7 @@ export function PainPoints() {
         <div className="section-heading">
           <Eyebrow>Desafios do empresário</Eyebrow>
           <h2>
-            Sua empresa
-            <br />
+            Sua empresa <br />
             vive alguma destas situações?
           </h2>
           <p>Antes de tentar de novo, entenda o cenário.</p>
@@ -167,10 +165,8 @@ export function Solution() {
         <div className="solution-copy">
           <Eyebrow>Diagnóstico Financeiro Auren</Eyebrow>
           <h2>
-            Antes de buscar
-            <br />
-            mais crédito,
-            <br />
+            Antes de buscar <br />
+            mais crédito, <br />
             <span className="soft-color">busque clareza.</span>
           </h2>
           <p>
@@ -220,13 +216,11 @@ export function FounderSection() {
         <div className="founder-copy">
           <Eyebrow light>À frente da Auren Capital</Eyebrow>
           <h2>
-            Vandilton
-            <br />
+            Vandilton <br />
             <span>Santos.</span>
           </h2>
           <p className="founder-lead">
-            Enquanto o mercado promete,
-            <br />
+            Enquanto o mercado promete, <br />
             <strong>Vandilton explica.</strong>
           </p>
           <p>
@@ -283,8 +277,7 @@ export function ProcessTimeline() {
         <div className="section-heading">
           <Eyebrow>Clareza em cada etapa</Eyebrow>
           <h2>
-            Entenda cada etapa.
-            <br />
+            Entenda cada etapa. <br />
             Decida com confiança.
           </h2>
         </div>
@@ -341,8 +334,7 @@ export function Differentiators() {
         <div className="difference-heading">
           <Eyebrow>A essência Auren</Eyebrow>
           <h2>
-            Compreensão antes
-            <br />
+            Compreensão antes <br />
             de qualquer promessa.
           </h2>
         </div>
@@ -373,8 +365,7 @@ export function PricingOffer({
         <div className="offer-copy">
           <Eyebrow>Seu primeiro passo</Eyebrow>
           <h2>
-            Invista em clareza.
-            <br />
+            Invista em clareza. <br />
             <span className="soft-color">Decida com estratégia.</span>
           </h2>
           <p>
@@ -384,8 +375,7 @@ export function PricingOffer({
           <div className="offer-quote">
             <span aria-hidden="true">“</span>
             <p>
-              O início não é uma promessa de crédito.
-              <br />
+              O início não é uma promessa de crédito. <br />
               <strong>É entender sua empresa.</strong>
             </p>
           </div>
@@ -406,8 +396,7 @@ export function PricingOffer({
             <Layers3 size={23} />
           </div>
           <h3>
-            Diagnóstico Financeiro
-            <br />
+            Diagnóstico Financeiro <br />
             Empresarial
           </h3>
           <p className="pricing-description">Análise e orientação inicial.</p>
@@ -454,8 +443,7 @@ export function TrustSection() {
         <div>
           <Eyebrow light>Transparência em cada etapa</Eyebrow>
           <h2>
-            Confiança começa
-            <br />
+            Confiança começa <br />
             com clareza.
           </h2>
           <p>Entenda o serviço e o que ele pode oferecer.</p>
@@ -513,8 +501,7 @@ export function EducationalContent() {
           <div>
             <Eyebrow>Informação para decidir</Eyebrow>
             <h2>
-              O que influencia
-              <br />a análise de crédito?
+              O que influencia <br />a análise de crédito?
             </h2>
           </div>
           <p>
@@ -546,8 +533,7 @@ export function ConversionSection() {
       <div className="container conversion-content">
         <Eyebrow>Informação para decidir melhor</Eyebrow>
         <h2>
-          Sua decisão
-          <br />
+          Sua decisão <br />
           merece <span>mais clareza.</span>
         </h2>
         <p>
