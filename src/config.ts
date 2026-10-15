@@ -7,8 +7,8 @@ export const brand = {
     hero: "/vandilton-santos.png" as string | null,
     founder: "/vandilton-santos-sobre.png" as string | null,
   },
-  legalName: null as string | null,
-  cnpj: null as string | null,
+  legalName: "Auren Capital Intermediação e Vendas Ltda." as string | null,
+  cnpj: "61.834.530/0001-20" as string | null,
   supportEmail: null as string | null,
 };
 

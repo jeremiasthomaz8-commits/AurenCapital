@@ -1677,6 +1677,13 @@ section[id] {
   color: #8b9aaf;
   line-height: 1.9;
 }
+.footer-legal {
+  margin-top: 12px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #8b9aaf;
+  overflow-wrap: anywhere;
+}
 .footer-bottom {
   margin-top: 28px;
   padding-top: 20px;

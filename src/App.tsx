@@ -238,10 +238,9 @@ export default function App() {
           </p>
           <div className="footer-bottom">
             <span>© 2026 Auren Capital. Todos os direitos reservados.</span>
-            <span>Dados cadastrais em validação.</span>
           </div>
           {brand.legalName && (
-            <p>
+            <p className="footer-legal">
               {brand.legalName} · CNPJ {brand.cnpj}
             </p>
           )}
