@@ -1,0 +1,14 @@
+node_modules/
+dist/
+apresentacao.html
+auren-capital-entrega.zip
+.env
+.env.*
+!.env.example
+data/
+*.db
+*.db-*
+*.tar.gz
+*.tsbuildinfo
+.openai/*.local.json
+qa/
