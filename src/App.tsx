@@ -144,7 +144,8 @@ export default function App() {
             ))}
           </nav>
           <PrimaryButton section="cabecalho" className="header-cta">
-            Quero meu diagnóstico
+            <span className="header-cta-label">Quero meu diagnóstico</span>
+            <span className="header-cta-mobile-label">Meu diagnóstico</span>
           </PrimaryButton>
           <button
             className="menu-toggle icon-button"

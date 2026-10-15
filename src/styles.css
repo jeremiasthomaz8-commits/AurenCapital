@@ -303,6 +303,9 @@ section[id] {
 .header-cta svg {
   width: 15px;
 }
+.header-cta-mobile-label {
+  display: none;
+}
 .menu-toggle,
 .mobile-nav {
   display: none;
@@ -2299,7 +2302,7 @@ section[id] {
   }
   .header-inner {
     height: 70px;
-    gap: 14px;
+    gap: 8px;
   }
   .brand-name {
     font-size: 25px;
@@ -2320,18 +2323,33 @@ section[id] {
   .logo img {
     width: 108px;
   }
-  .header-cta {
-    font-size: 11px;
-    min-height: 36px;
-    padding: 10px 11px;
-    gap: 7px;
+  .header .header-cta {
+    flex-shrink: 0;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .header-cta-label {
+    display: none;
+  }
+  .header-cta-mobile-label {
+    display: inline;
   }
   .header-cta svg {
     width: 13px;
   }
-  .menu-toggle {
-    padding: 7px;
+  .header .menu-toggle {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border: none;
+    align-items: center;
+    justify-content: center;
   }
   .menu-toggle svg {
     width: 20px;
@@ -3064,9 +3082,9 @@ section[id] {
   .header-inner {
     gap: 7px;
   }
-  .header-cta {
-    font-size: 10px;
-    padding: 9px;
+  .header .header-cta {
+    font-size: 11px;
+    padding-inline: 10px;
   }
   .header-cta svg {
     display: none;
