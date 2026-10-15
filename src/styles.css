@@ -2956,6 +2956,10 @@ section[id] {
   .faq-heading h2 br {
     display: none;
   }
+  .faq-heading h2 .soft-color {
+    display: inline-block;
+    white-space: nowrap;
+  }
   .faq-heading > p:last-child {
     font-size: 13px;
     margin-top: 15px;
