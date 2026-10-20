@@ -417,8 +417,8 @@ export function PricingOffer({
           </ul>
           <PrimaryButton section="oferta">Quero meu diagnóstico</PrimaryButton>
           <p className="price-disclaimer">
-            Consultorias adicionais à parte. Sem garantia de aprovação de
-            crédito.
+            Com base na consultoria, nossa equipe analisa o que está travando o
+            seu crédito.
           </p>
           <button className="text-button" onClick={onTerms}>
             Ver condições do serviço <ArrowUpRight size={13} />
