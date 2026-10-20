@@ -39,8 +39,8 @@ export function Hero() {
           </p>
           <PrimaryButton section="hero">Analisar minha empresa</PrimaryButton>
           <p className="cta-caption">
-            <LockKeyhole size={13} aria-hidden="true" /> Diagnóstico pago. Sem
-            promessa de aprovação.
+            <LockKeyhole size={13} aria-hidden="true" /> Diagnóstico pago, resultado
+            em até 30 minutos.
           </p>
           <div className="hero-trust">
             <span>
