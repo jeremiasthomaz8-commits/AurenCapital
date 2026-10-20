@@ -33,8 +33,9 @@ export function Hero() {
             Entenda o que pode dificultar seu acesso ao crédito.
           </p>
           <p className="hero-description">
-            Com quase 8 anos no setor bancário, Vandilton Santos ajuda a
-            entender sua empresa e planejar os próximos passos.
+            Com mais de 9 anos no mercado financeiro, Vandilton Santos é
+            ex-gerente de banco e ajuda sua empresa a planejar os próximos passos
+            rumo ao crédito.
           </p>
           <PrimaryButton section="hero">Analisar minha empresa</PrimaryButton>
           <p className="cta-caption">
