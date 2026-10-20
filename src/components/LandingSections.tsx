@@ -16,7 +16,7 @@ import {
   SlidersHorizontal,
   Wallet,
 } from "lucide-react";
-import { type ServiceConfig, money } from "../config";
+import { brand, type ServiceConfig, money } from "../config";
 import { CheckItem, Eyebrow, Portrait, PrimaryButton } from "./ui";
 
 export function Hero() {
@@ -402,19 +402,11 @@ export function PricingOffer({
           </h3>
           <p className="pricing-description">Análise e orientação inicial.</p>
           <div className="price-area">
-            {config.priceCents !== null ? (
-              <>
-                <span className="price">{money(config.priceCents)}</span>
-                <span className="price-caption">Pagamento único</span>
-              </>
-            ) : (
-              <>
-                <span className="price pending-price">Valor a confirmar</span>
-                <span className="price-caption">
-                  Informado antes de contratar
-                </span>
-              </>
-            )}
+            <span className="price-caption">De <s>R$139,90</s> por</span>
+            <span className="price">
+              {money(config.priceCents ?? brand.draftPriceCents)}
+            </span>
+            <span className="price-caption">Pagamento único</span>
           </div>
           <ul className="pricing-inclusions">
             <CheckItem>Análise do SCR e Rating Bancário real</CheckItem>
