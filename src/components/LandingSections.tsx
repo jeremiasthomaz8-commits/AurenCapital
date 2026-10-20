@@ -176,8 +176,7 @@ export function Solution() {
           </p>
           <PrimaryButton section="solucao">Ver próximos passos</PrimaryButton>
           <p className="disclaimer">
-            Não é oferta de empréstimo nem substitui a análise da instituição
-            financeira.
+            A concessão de crédito está sujeita à análise das instituições.
           </p>
         </div>
         <div className="diagnostic-map">
