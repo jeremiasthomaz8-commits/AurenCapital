@@ -224,13 +224,14 @@ export function FounderSection() {
             <strong>Vandilton explica.</strong>
           </p>
           <p>
-            Com quase oito anos em relacionamento bancário empresarial e
-            operações de crédito, Vandilton ajuda empresários a compreender as
-            análises financeiras.
+            Com mais de 9 anos no mercado financeiro e empresarial, Vandilton
+            ajuda empresários a entender por que têm o crédito negado.
           </p>
           <p>
-            Na Auren Capital, traduz conhecimento técnico em orientação clara e
-            responsável. Boas decisões começam com informação.
+            Na Auren Capital, identificamos, com análise técnica, o que impede
+            sua empresa de acessar crédito subsidiado com juros de 0,5% a 1,8%
+            ao ano. Os recursos estão disponíveis em linhas como Pronampe,
+            Procred, FGI e BNDES.
           </p>
           <div className="founder-credentials">
             <span>
