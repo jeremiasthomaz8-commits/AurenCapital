@@ -117,8 +117,8 @@ export function Portrait({
         <div className="experience-note">
           <MoveUpRight size={23} aria-hidden="true" />
           <div>
-            <strong>Quase 8 anos</strong>
-            <span>no setor bancário</span>
+            <strong>Mais de 9 anos</strong>
+            <span>no setor financeiro</span>
           </div>
         </div>
       )}
