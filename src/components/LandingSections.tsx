@@ -417,11 +417,11 @@ export function PricingOffer({
             )}
           </div>
           <ul className="pricing-inclusions">
-            <CheckItem>Coleta inicial estruturada</CheckItem>
-            <CheckItem>Avaliação no escopo contratado</CheckItem>
-            <CheckItem>Pontos de atenção identificados</CheckItem>
-            <CheckItem>Orientação inicial</CheckItem>
-            <CheckItem>Possíveis próximos passos</CheckItem>
+            <CheckItem>Análise do SCR e Rating Bancário real</CheckItem>
+            <CheckItem>Mapeamento das linhas elegíveis</CheckItem>
+            <CheckItem>Pontos de bloqueio identificados</CheckItem>
+            <CheckItem>Estratégia de acesso personalizada</CheckItem>
+            <CheckItem>Reunião individual com especialista</CheckItem>
           </ul>
           <PrimaryButton section="oferta">Quero meu diagnóstico</PrimaryButton>
           <p className="price-disclaimer">
