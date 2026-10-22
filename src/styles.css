@@ -3160,3 +3160,35 @@ section[id] {
     transition: none !important;
   }
 }
+
+.quick-diagnosis {
+  padding-block: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.quick-diagnosis h2 {
+  font-size: 28px;
+}
+.short-form .form-field {
+  margin-bottom: 16px;
+}
+.short-form .form-field input,
+.short-form .form-field select {
+  font-size: 16px;
+}
+.short-form .form-next {
+  width: 100%;
+  margin-top: 20px;
+}
+.short-form-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+.short-form .consent-field {
+  margin-top: 18px;
+}

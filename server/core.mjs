@@ -50,7 +50,7 @@ export function validateLead(input, legalVersion) {
   const output = {};
   for (const [field, min, max] of [
     ["name", 3, 100],
-    ["company", 2, 120],
+    ...(input.size !== undefined ? [] : [["company", 2, 120]]),
     ["email", 5, 150],
     ["phone", 10, 11],
   ]) {
@@ -67,7 +67,19 @@ export function validateLead(input, legalVersion) {
     !/^[1-9]{2}[2-9]\d{7,8}$/.test(output.phone)
   )
     throw new PublicError("Revise seu e-mail e WhatsApp.");
-  for (const [key, options] of Object.entries(enums)) {
+  const choices =
+    input.size !== undefined
+      ? {
+          age: enums.age,
+          size: [
+            "MEI",
+            "ME (até R$360 mil/ano)",
+            "EPP (de R$360 mil a R$4,8 milhões/ano)",
+            "Acima de R$4,8 milhões/ano",
+          ],
+        }
+      : enums;
+  for (const [key, options] of Object.entries(choices)) {
     if (!options.includes(input[key]))
       throw new PublicError("Revise as opções do questionário.");
     output[key] = input[key];

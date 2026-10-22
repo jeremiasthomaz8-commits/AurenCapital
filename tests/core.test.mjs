@@ -157,3 +157,25 @@ test("checkout aceita apenas HTTPS no domínio explicitamente autorizado", () =>
   ])
     assert.throws(() => verifiedCheckoutUrl(url, ["checkout.example.com"]));
 });
+
+test("formulário curto aceita porte e tempo de atividade sem inventar dados da empresa", () => {
+  const data = {
+    name: "Pessoa de Teste",
+    email: "teste@example.com",
+    phone: "11987654321",
+    size: "ME (até R$360 mil/ano)",
+    age: "De 1 a 3 anos",
+    paidConsent: true,
+    privacyConsent: true,
+    legalVersion: "teste-v1",
+    website: "",
+  };
+  const result = validateLead(data, "teste-v1");
+  assert.equal(result.size, data.size);
+  assert.equal(result.company, undefined);
+  assert.throws(() => validateLead({ ...data, size: "inválido" }, "teste-v1"));
+  assert.throws(() => validateLead({ ...data, age: "" }, "teste-v1"));
+  assert.throws(() =>
+    validateLead({ ...data, privacyConsent: false }, "teste-v1"),
+  );
+});

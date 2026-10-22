@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { JSDOM } from "jsdom";
 import { createServer } from "vite";
 
-test("questionário valida campos, preserva respostas e permite revisar sem enviar dados na prévia", async () => {
+test("formulário curto valida cinco campos e não envia dados na prévia", async () => {
   const dom = new JSDOM(
     '<!doctype html><html><body><div id="test"></div></body></html>',
     { url: "https://presentation.example/" },
@@ -68,44 +68,95 @@ test("questionário valida campos, preserva respostas e permite revisar sem envi
     );
     await submit();
     assert.match(text(), /Informe seu nome/);
-    assert.match(text(), /Etapa 1 de 4/);
+    assert.equal(document.querySelectorAll(".form-field").length, 5);
+    assert.equal(document.getElementById("company"), null);
     await field("name", "Pessoa de Teste");
-    await field("company", "Empresa de Teste");
-    await act(async () =>
-      document.querySelector('input[name="active"][value="Não"]').click(),
-    );
-    assert.match(text(), /direcionado a empresas/);
-    await act(async () =>
-      document.querySelector('input[name="active"][value="Sim"]').click(),
-    );
     await field("age", "De 1 a 3 anos");
-    await submit();
-    assert.match(text(), /Etapa 2 de 4/);
-    await field("objective", "Capital de giro");
-    await field("revenue", "Prefiro informar posteriormente");
-    await field("difficulty", "Crédito negado");
-    await submit();
-    assert.match(text(), /Etapa 3 de 4/);
+    await field("size", "ME (até R$360 mil/ano)");
     await field("phone", "11987654321");
     await field("email", "invalido");
     await submit();
     assert.match(text(), /Informe um e-mail válido/);
     assert.equal(document.getElementById("phone").value, "(11) 98765-4321");
     await field("email", "teste@example.com");
-    for (const checkbox of document.querySelectorAll(".consent-field input"))
-      await act(async () => checkbox.click());
+    await act(async () =>
+      document.querySelector(".consent-field input").click(),
+    );
     await submit();
-    assert.match(text(), /Etapa 4 de 4/);
-    assert.match(text(), /Empresa de Teste/);
-    assert.match(text(), /Valor a confirmar/);
+    assert.match(text(), /Contratação indisponível/);
     assert.equal(
       document.querySelector('button[type="submit"]').disabled,
       true,
     );
-    await act(async () => document.querySelector(".back-button").click());
     assert.equal(document.getElementById("email").value, "teste@example.com");
     assert.equal(fetchCount, 0);
     assert.equal(dom.window.localStorage.length, 0);
+    let sent;
+    globalThis.fetch = async (_url, options) => {
+      sent = JSON.parse(options.body);
+      return {
+        ok: true,
+        json: async () => ({ checkoutUrl: "http://invalid.example" }),
+      };
+    };
+    await act(async () =>
+      root.render(
+        createElement(QualificationForm, {
+          config: { ...fallbackConfig, available: true, priceCents: 8990 },
+          onPrivacy() {},
+          onTerms() {},
+        }),
+      ),
+    );
+    await submit();
+    assert.equal(sent.size, "ME (até R$360 mil/ano)");
+    assert.equal(sent.phone, "11987654321");
+    assert.equal(sent.quotedPriceCents, 8990);
+    assert.equal(sent.company, undefined);
+    assert.match(text(), /Endereço de pagamento não verificado/);
+    globalThis.Element = dom.window.Element;
+    dom.window.HTMLDialogElement.prototype.showModal = function () {
+      this.setAttribute("open", "");
+    };
+    dom.window.HTMLDialogElement.prototype.close = function () {
+      this.removeAttribute("open");
+    };
+    globalThis.fetch = async () => ({
+      ok: true,
+      json: async () => fallbackConfig,
+    });
+    const { default: App } = await vite.ssrLoadModule("/src/App.tsx");
+    await act(async () => root.render(createElement(App)));
+    assert.equal(document.querySelector("form"), null);
+    await act(async () => document.querySelector(".header-cta").click());
+    assert.equal(
+      document.querySelector("dialog[open] .short-form .form-field label")
+        .textContent,
+      "Nome completo",
+    );
+    await field("name", "Nome preservado");
+    await act(async () =>
+      document.querySelector(".short-form-links button").click(),
+    );
+    assert.equal(document.querySelectorAll("dialog[open]").length, 2);
+    const titles = [...document.querySelectorAll("dialog")].map((d) =>
+      d.getAttribute("aria-labelledby"),
+    );
+    assert.notEqual(titles[0], titles[1]);
+    await act(async () =>
+      [...document.querySelectorAll("dialog")]
+        .at(-1)
+        .querySelector('[aria-label="Fechar"]')
+        .click(),
+    );
+    assert.equal(document.getElementById("name").value, "Nome preservado");
+    await act(async () =>
+      document
+        .querySelector("dialog")
+        .dispatchEvent(new dom.window.Event("cancel", { cancelable: true })),
+    );
+    assert.equal(document.querySelector("dialog"), null);
+    delete globalThis.Element;
   } finally {
     globalThis.fetch = originalFetch;
     await act(async () => root.unmount());

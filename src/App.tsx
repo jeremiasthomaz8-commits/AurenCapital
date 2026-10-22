@@ -30,6 +30,7 @@ type Modal = "privacy" | "terms" | "preferences" | "contact" | null;
 
 export default function App() {
   const [config, setConfig] = useState<ServiceConfig>(fallbackConfig);
+  const [formOpen, setFormOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [modal, setModal] = useState<Modal>(null);
   const [analytics, setAnalytics] = useState(() => {
@@ -116,6 +117,29 @@ export default function App() {
         ),
       );
   }, []);
+  useEffect(() => {
+    const open = (event: MouseEvent) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest('a[href="#diagnostico"]')
+          : null;
+      if (
+        !link ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      event.preventDefault();
+      setMenuOpen(false);
+      setFormOpen(true);
+      track("start_qualification");
+    };
+    document.addEventListener("click", open);
+    if (window.location.hash === "#diagnostico") setFormOpen(true);
+    return () => document.removeEventListener("click", open);
+  }, []);
   function preferences(value: boolean) {
     setAnalytics(value);
     try {
@@ -194,14 +218,25 @@ export default function App() {
         <PricingOffer config={config} onTerms={() => setModal("terms")} />
         <TrustSection />
         <EducationalContent />
-        <QualificationForm
-          config={config}
-          onPrivacy={() => setModal("privacy")}
-          onTerms={() => setModal("terms")}
-        />
+        <section id="diagnostico" className="container quick-diagnosis">
+          <h2>Seu diagnóstico começa aqui.</h2>
+          <PrimaryButton>Preencher meus dados</PrimaryButton>
+        </section>
         <FAQAccordion />
         <ConversionSection />
       </main>
+      {formOpen && (
+        <Dialog
+          title="Garantir meu diagnóstico financeiro"
+          onClose={() => setFormOpen(false)}
+        >
+          <QualificationForm
+            config={config}
+            onPrivacy={() => setModal("privacy")}
+            onTerms={() => setModal("terms")}
+          />
+        </Dialog>
+      )}
       <footer className="footer">
         <div className="container">
           <div className="footer-top">
