@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { ArrowRight, LoaderCircle } from "lucide-react";
-import { apiBase, brand, money, type ServiceConfig } from "../config";
-import { attribution, track } from "../analytics";
+import { brand, money, type ServiceConfig } from "../config";
+import { track } from "../analytics";
+import { checkout } from "../checkout";
 const initial = {
   name: "",
   email: "",
@@ -36,7 +37,7 @@ export function QualificationForm({
   const [serverError, setServerError] = useState("");
   const form = useRef<HTMLFormElement>(null);
   const sending = useRef(false);
-  const attemptKey = useRef(crypto.randomUUID());
+
   const update = <K extends keyof FormValues>(key: K, value: FormValues[K]) => {
     setValues((previous) => ({ ...previous, [key]: value }));
     setErrors((previous) => ({ ...previous, [key]: "" }));
@@ -64,55 +65,20 @@ export function QualificationForm({
       );
     return Object.keys(next).length === 0;
   }
-  async function submit(event: React.FormEvent) {
+  function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (sending.current) return;
-    if (!validate()) return;
-    track("complete_qualification");
-    if (!config.available) {
-      setServerError(
-        "Contratação indisponível. Nenhum dado enviado ou pagamento realizado.",
-      );
-      return;
-    }
+    if (sending.current || values.website || !validate()) return;
     sending.current = true;
     setBusy(true);
     setServerError("");
+    track("complete_qualification");
+    track("begin_checkout");
     try {
-      const response = await fetch(`${apiBase}/api/qualifications`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Idempotency-Key": attemptKey.current,
-        },
-        body: JSON.stringify({
-          ...values,
-          phone: values.phone.replace(/\D/g, ""),
-          email: values.email.trim(),
-          attribution: attribution(),
-          legalVersion: config.legalVersion,
-          quotedPriceCents: config.priceCents,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(
-          data.message || "Não foi possível contratar. Tente novamente.",
-        );
-      const url = new URL(data.checkoutUrl);
-      if (url.protocol !== "https:")
-        throw new Error("Endereço de pagamento não verificado.");
-      track("begin_checkout");
-      window.location.assign(url.toString());
-    } catch (error) {
-      setServerError(
-        error instanceof Error
-          ? error.message
-          : "Verifique sua conexão e tente novamente.",
-      );
-    } finally {
+      checkout.open();
+    } catch {
       sending.current = false;
       setBusy(false);
+      setServerError("Não foi possível abrir o pagamento. Tente novamente.");
     }
   }
 
@@ -254,7 +220,7 @@ export function QualificationForm({
       <button
         type="submit"
         className="button button-primary form-next"
-        disabled={busy || !config.available}
+        disabled={busy}
       >
         {busy ? (
           <>
@@ -266,11 +232,9 @@ export function QualificationForm({
           </>
         )}
       </button>
-      {!config.available && (
-        <p className="form-bottom">
-          Pagamento em preparação. Nenhum dado será enviado nesta prévia.
-        </p>
-      )}
+      <p className="form-bottom">
+        Você será direcionado ao pagamento seguro da Greenn.
+      </p>
     </form>
   );
 }

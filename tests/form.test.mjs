@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { JSDOM } from "jsdom";
 import { createServer } from "vite";
 
-test("formulário curto valida cinco campos e não envia dados na prévia", async () => {
+test("formulário valida campos e abre o checkout Greenn sem depender da API", async () => {
   const dom = new JSDOM(
     '<!doctype html><html><body><div id="test"></div></body></html>',
     { url: "https://presentation.example/" },
@@ -26,6 +26,10 @@ test("formulário curto valida cinco campos e não envia dados na prévia", asyn
     "/src/components/QualificationForm.tsx",
   );
   const { fallbackConfig } = await vite.ssrLoadModule("/src/config.ts");
+  const { checkout } = await vite.ssrLoadModule("/src/checkout.ts");
+  let redirects = [];
+  const originalOpen = checkout.open;
+  checkout.open = () => redirects.push(checkout.url);
   const root = createRoot(document.getElementById("test"));
   let fetchCount = 0;
   const originalFetch = globalThis.fetch;
@@ -68,6 +72,11 @@ test("formulário curto valida cinco campos e não envia dados na prévia", asyn
     );
     await submit();
     assert.match(text(), /Informe seu nome/);
+    assert.equal(redirects.length, 0);
+    assert.equal(
+      document.querySelector('button[type="submit"]').disabled,
+      false,
+    );
     assert.equal(document.querySelectorAll(".form-field").length, 5);
     assert.equal(document.getElementById("company"), null);
     await field("name", "Pessoa de Teste");
@@ -77,43 +86,20 @@ test("formulário curto valida cinco campos e não envia dados na prévia", asyn
     await field("email", "invalido");
     await submit();
     assert.match(text(), /Informe um e-mail válido/);
+    assert.equal(redirects.length, 0);
     assert.equal(document.getElementById("phone").value, "(11) 98765-4321");
     await field("email", "teste@example.com");
     await act(async () =>
       document.querySelector(".consent-field input").click(),
     );
     await submit();
-    assert.match(text(), /Contratação indisponível/);
-    assert.equal(
-      document.querySelector('button[type="submit"]').disabled,
-      true,
-    );
-    assert.equal(document.getElementById("email").value, "teste@example.com");
+    assert.deepEqual(redirects, [
+      "https://payfast.greenn.com.br/199343/offer/1AEUwe",
+    ]);
+    await submit();
+    assert.equal(redirects.length, 1);
     assert.equal(fetchCount, 0);
     assert.equal(dom.window.localStorage.length, 0);
-    let sent;
-    globalThis.fetch = async (_url, options) => {
-      sent = JSON.parse(options.body);
-      return {
-        ok: true,
-        json: async () => ({ checkoutUrl: "http://invalid.example" }),
-      };
-    };
-    await act(async () =>
-      root.render(
-        createElement(QualificationForm, {
-          config: { ...fallbackConfig, available: true, priceCents: 8990 },
-          onPrivacy() {},
-          onTerms() {},
-        }),
-      ),
-    );
-    await submit();
-    assert.equal(sent.size, "ME (até R$360 mil/ano)");
-    assert.equal(sent.phone, "11987654321");
-    assert.equal(sent.quotedPriceCents, 8990);
-    assert.equal(sent.company, undefined);
-    assert.match(text(), /Endereço de pagamento não verificado/);
     globalThis.Element = dom.window.Element;
     dom.window.HTMLDialogElement.prototype.showModal = function () {
       this.setAttribute("open", "");
@@ -158,6 +144,7 @@ test("formulário curto valida cinco campos e não envia dados na prévia", asyn
     assert.equal(document.querySelector("dialog"), null);
     delete globalThis.Element;
   } finally {
+    checkout.open = originalOpen;
     globalThis.fetch = originalFetch;
     await act(async () => root.unmount());
     await vite.close();
