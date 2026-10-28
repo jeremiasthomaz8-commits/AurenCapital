@@ -274,7 +274,7 @@ export default function App() {
           <div className="footer-bottom">
             <span>© 2026 Auren Capital. Todos os direitos reservados.</span>
             <div className="footer-developer">
-              <span>Desenvolvido pela DGS Marketing &amp; Growh</span>
+              <span>Desenvolvido pela DGS Marketing &amp; Growth</span>
               <img
                 src="/logo-dgs.svg"
                 alt="DGS Marketing & Growth"
