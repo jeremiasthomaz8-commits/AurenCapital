@@ -1684,7 +1684,23 @@ section[id] {
   color: #8b9aaf;
   overflow-wrap: anywhere;
 }
+.footer-developer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  color: #a9b6c7;
+  line-height: 1.6;
+}
+.footer-developer img {
+  display: block;
+  width: 153px;
+  height: auto;
+  flex-shrink: 0;
+}
 .footer-bottom {
+  align-items: center;
+  flex-wrap: wrap;
   margin-top: 28px;
   padding-top: 20px;
   border-top: 1px solid #ffffff09;
